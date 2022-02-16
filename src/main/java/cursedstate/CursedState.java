@@ -5,13 +5,16 @@ import basemod.interfaces.PostInitializeSubscriber;
 import battleaimod.BattleAiMod;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import cursedstate.actions.ExhaustCurseThenActivateActionState;
+import cursedstate.actions.ReleasedKnowledgeActionState;
 import cursedstate.heuristics.CursesAndStatusesFirstHeuristic;
 import cursedstate.patches.HellsGateOpenPowerPatch;
 import cursedstate.powers.*;
 import savestate.StateFactories;
+import savestate.actions.ActionState;
 import savestate.actions.CurrentActionState;
 import savestate.powers.PowerState;
 import thecursed.actions.ExhaustCurseThenActivateAction;
+import thecursed.actions.ReleasedKnowledgeAction;
 import thecursed.powers.*;
 
 @SpireInitializer
@@ -23,6 +26,7 @@ public class CursedState implements PostInitializeSubscriber {
     @Override
     public void receivePostInitialize() {
         populateCurrentActionsFactory();
+        populateActionsFactory();
         populatePowerFactory();
 
         BattleAiMod.actionHeuristics
@@ -35,6 +39,11 @@ public class CursedState implements PostInitializeSubscriber {
     private void populateCurrentActionsFactory() {
         StateFactories.currentActionByClassMap
                 .put(ExhaustCurseThenActivateAction.class, new CurrentActionState.CurrentActionFactories(action -> new ExhaustCurseThenActivateActionState(action)));
+    }
+
+    private void populateActionsFactory() {
+        StateFactories.actionByClassMap
+                .put(ReleasedKnowledgeAction.class, new ActionState.ActionFactories(action -> new ReleasedKnowledgeActionState()));
     }
 
     private void populatePowerFactory() {
