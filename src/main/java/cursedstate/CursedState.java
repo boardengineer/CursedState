@@ -1,6 +1,7 @@
 package cursedstate;
 
 import basemod.BaseMod;
+import basemod.interfaces.EditCardsSubscriber;
 import basemod.interfaces.PostInitializeSubscriber;
 import battleaimod.BattleAiMod;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
@@ -16,10 +17,13 @@ import savestate.actions.CurrentActionState;
 import savestate.powers.PowerState;
 import thecursed.actions.ExhaustCurseThenActivateAction;
 import thecursed.actions.ReleasedKnowledgeAction;
+import thecursed.cards.skill.PrepareRite;
 import thecursed.powers.*;
 
+import static thecursed.enums.AbstractCardEnum.THE_CURSED_PURPLE;
+
 @SpireInitializer
-public class CursedState implements PostInitializeSubscriber {
+public class CursedState implements PostInitializeSubscriber, EditCardsSubscriber {
     public static void initialize() {
         BaseMod.subscribe(new CursedState());
     }
@@ -73,5 +77,11 @@ public class CursedState implements PostInitializeSubscriber {
                 .put(SpitefulPlanPower.POWER_ID, new PowerState.PowerFactories(power -> new SpitefulPlanPowerState(power)));
         StateFactories.powerByIdMap
                 .put(VoidFormPower.POWER_ID, new PowerState.PowerFactories(power -> new VoidFormPowerState(power)));
+    }
+
+    @Override
+    public void receiveEditCards() {
+        // Needs Action State
+        BaseMod.removeCard(PrepareRite.ID, THE_CURSED_PURPLE);
     }
 }
