@@ -28,7 +28,6 @@ class CursedNewTextPatch {
         finder.add(new File(Loader.STS_JAR));
 
         for (ModInfo modInfo : Loader.MODINFOS) {
-            System.err.println(modInfo.ID);
             if (modInfo.ID.equals("thecursed") && modInfo.jarURL != null) {
                 try {
                     finder.add(new File(modInfo.jarURL.toURI()));

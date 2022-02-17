@@ -7,6 +7,7 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import cursedstate.actions.ExhaustCurseThenActivateActionState;
 import cursedstate.actions.ReleasedKnowledgeActionState;
 import cursedstate.heuristics.CursesAndStatusesFirstHeuristic;
+import cursedstate.heuristics.PlayHeuristic;
 import cursedstate.patches.HellsGateOpenPowerPatch;
 import cursedstate.powers.*;
 import savestate.StateFactories;
@@ -31,6 +32,7 @@ public class CursedState implements PostInitializeSubscriber {
 
         BattleAiMod.actionHeuristics
                 .put(ExhaustCurseThenActivateAction.class, new CursesAndStatusesFirstHeuristic());
+        BattleAiMod.cardPlayHeuristics.add(new PlayHeuristic());
 
 
         HellsGateOpenPowerPatch.createCursedCardPoorl();
