@@ -47,12 +47,7 @@ class CursedNewTextPatch {
         ArrayList<ClassInfo> foundClasses = new ArrayList<>();
         finder.findClasses(foundClasses, filter);
 
-        for(int i= 0; i < 50; i++) {
-            System.err.println("Trying");
-        }
         for (ClassInfo classInfo : foundClasses) {
-            System.err.println("Found classes for cursed mod texture patch " + classInfo.getClassName());
-
             CtClass ctClass = ctBehavior.getDeclaringClass().getClassPool().get(classInfo.getClassName());
             try {
                 CtConstructor[] methods = ctClass.getConstructors();
