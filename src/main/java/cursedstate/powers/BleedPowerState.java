@@ -14,6 +14,6 @@ public class BleedPowerState extends PowerState {
     @Override
     public AbstractPower loadPower(AbstractCreature targetAndSource) {
         // All bleeding so far has come from the player, this may be a problem if it chanes
-        return new BleedPower(AbstractDungeon.player, targetAndSource, amount);
+        return new BleedPower(targetAndSource, AbstractDungeon.player, amount);
     }
 }
