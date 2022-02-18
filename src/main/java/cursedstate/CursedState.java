@@ -6,6 +6,7 @@ import basemod.interfaces.PostInitializeSubscriber;
 import battleaimod.BattleAiMod;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import cursedstate.actions.ExhaustCurseThenActivateActionState;
+import cursedstate.actions.IncreaseMaxHpActionState;
 import cursedstate.actions.ReleasedKnowledgeActionState;
 import cursedstate.heuristics.CursesAndStatusesFirstHeuristic;
 import cursedstate.heuristics.PlayHeuristic;
@@ -16,6 +17,7 @@ import savestate.actions.ActionState;
 import savestate.actions.CurrentActionState;
 import savestate.powers.PowerState;
 import thecursed.actions.ExhaustCurseThenActivateAction;
+import thecursed.actions.IncreasePlayersMaxHPAction;
 import thecursed.actions.ReleasedKnowledgeAction;
 import thecursed.cards.skill.PrepareRite;
 import thecursed.powers.*;
@@ -50,6 +52,8 @@ public class CursedState implements PostInitializeSubscriber, EditCardsSubscribe
     private void populateActionsFactory() {
         StateFactories.actionByClassMap
                 .put(ReleasedKnowledgeAction.class, new ActionState.ActionFactories(action -> new ReleasedKnowledgeActionState()));
+        StateFactories.actionByClassMap
+                .put(IncreasePlayersMaxHPAction.class, new ActionState.ActionFactories(action -> new IncreaseMaxHpActionState(action)));
     }
 
     private void populatePowerFactory() {
