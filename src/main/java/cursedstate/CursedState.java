@@ -5,20 +5,24 @@ import basemod.interfaces.EditCardsSubscriber;
 import basemod.interfaces.PostInitializeSubscriber;
 import battleaimod.BattleAiMod;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
+import cursedstate.actions.ApplyBleedActionState;
 import cursedstate.actions.ExhaustCurseThenActivateActionState;
 import cursedstate.actions.IncreaseMaxHpActionState;
 import cursedstate.actions.ReleasedKnowledgeActionState;
 import cursedstate.heuristics.CursesAndStatusesFirstHeuristic;
 import cursedstate.heuristics.PlayHeuristic;
+import cursedstate.patches.CursedNewTexPatch;
 import cursedstate.patches.HellsGateOpenPowerPatch;
 import cursedstate.powers.*;
 import savestate.StateFactories;
 import savestate.actions.ActionState;
 import savestate.actions.CurrentActionState;
 import savestate.powers.PowerState;
+import thecursed.actions.ApplyBleedAction;
 import thecursed.actions.ExhaustCurseThenActivateAction;
 import thecursed.actions.IncreasePlayersMaxHPAction;
 import thecursed.actions.ReleasedKnowledgeAction;
+import thecursed.cards.curse.Dregs;
 import thecursed.cards.skill.PrepareRite;
 import thecursed.powers.*;
 
@@ -51,9 +55,11 @@ public class CursedState implements PostInitializeSubscriber, EditCardsSubscribe
 
     private void populateActionsFactory() {
         StateFactories.actionByClassMap
-                .put(ReleasedKnowledgeAction.class, new ActionState.ActionFactories(action -> new ReleasedKnowledgeActionState()));
+                .put(ApplyBleedAction.class, new ActionState.ActionFactories(action -> new ApplyBleedActionState(action)));
         StateFactories.actionByClassMap
                 .put(IncreasePlayersMaxHPAction.class, new ActionState.ActionFactories(action -> new IncreaseMaxHpActionState(action)));
+        StateFactories.actionByClassMap
+                .put(ReleasedKnowledgeAction.class, new ActionState.ActionFactories(action -> new ReleasedKnowledgeActionState()));
     }
 
     private void populatePowerFactory() {
@@ -87,5 +93,7 @@ public class CursedState implements PostInitializeSubscriber, EditCardsSubscribe
     public void receiveEditCards() {
         // Needs Action State
         BaseMod.removeCard(PrepareRite.ID, THE_CURSED_PURPLE);
+
+        CursedNewTexPatch.dregs = new Dregs();
     }
 }
